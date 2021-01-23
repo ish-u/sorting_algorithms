@@ -53,6 +53,7 @@ def getGraph():
     plt.xlim(0, 1000)
     plt.savefig('graph.png')
     # plt.show()
+    plt.close()
 
 def getComparisonCSV(data):
     try:
