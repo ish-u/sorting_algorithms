@@ -24,8 +24,9 @@ class gui:
         self.bubbleSort.grid(row=1, column=2)
         self.insertionSort.grid(row=2, column=1)
         self.mergeSort.grid(row=2, column=2)
+        self.numberOfTestCases = IntVar()
         self.progress = Progressbar(self.window, orient=HORIZONTAL,
-                                    length=250, mode="determinate", takefocus=True, maximum=100)
+                                    length=250, mode="determinate", takefocus=True, maximum=100, variable = self.numberOfTestCases)
         self.progress.pack()
         self.frame2 = Frame(self.window)
         self.frame2.pack()
@@ -43,14 +44,12 @@ class gui:
             messagebox.showerror("ERROR", "Please Select An Option")
             return
         self.generate["state"] = "disabled"
-        flag = getData(getNumbers(),self.sortingAlgorithm.get())
+        flag = self.getData(getNumbers(),self.sortingAlgorithm.get())
         if flag:
-            for i in range(100):                
-                self.progress.step()            
-                self.window.update()
             self.showImage["state"] = "normal" 
             
     def showGraph(self):
+        self.numberOfTestCases.set(0)
         popup = Toplevel()
         popup.title("Graph")
         graph = ImageTk.PhotoImage(Image.open("graph.png"))
@@ -61,5 +60,47 @@ class gui:
         self.showImage["state"] = "disabled"
         self.generate["state"] = "normal"
 
+    # getData
+    def getData(self,numbers,algo):
+        data = []
+        testCases = []
+        sampleSpaceSize = 1
+        while self.numberOfTestCases.get() != 100:
+            random.shuffle(numbers)
+            sampleSpaceSize = random.randint(1,1000)
+            if sampleSpaceSize not in testCases:
+                testCases.append(sampleSpaceSize)
+                startIndex = random.randint(0,len(numbers)-sampleSpaceSize)
+                sampleSpace = numbers[startIndex:startIndex+sampleSpaceSize]
+                if algo == 1:
+                    avg = selectionSort(sampleSpace)
+                    best = selectionSort(sampleSpace)
+                    sampleSpace.reverse()
+                    worst = selectionSort(sampleSpace)
+                elif algo == 2:
+                    avg = bubbleSort(sampleSpace)
+                    best = bubbleSort(sampleSpace)
+                    sampleSpace.reverse()
+                    worst = bubbleSort(sampleSpace)
+                elif algo == 3:
+                    avg = insertionSort(sampleSpace)
+                    best = insertionSort(sampleSpace)
+                    sampleSpace.reverse()
+                    worst = insertionSort(sampleSpace)
+                elif algo == 4:
+                    avg = mergeSort(sampleSpace)
+                    best = mergeSort(sampleSpace)
+                    sampleSpace.reverse()
+                    worst = mergeSort(sampleSpace)
+                data.append(timeComplexity(avg,best,worst))
+                self.numberOfTestCases.set(self.numberOfTestCases.get() + 1)             
+                self.window.update()
+                
+        
+        getComparisonCSV(data)
+        getGraph()
+
+        return 1
 
 gui()
+
