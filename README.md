@@ -14,8 +14,7 @@ python main.py
     
 
 #### Want to Add:
-    1. Ability to view the CSV file that contains Number of Comparisions.
+    1. ~~Ability to view the CSV file that contains Number of Comparisions.~~
 
 ###### _Just another Product of my Existential Crisis_
 
-    
