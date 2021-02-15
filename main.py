@@ -9,7 +9,7 @@ class gui:
     def __init__(self):
         self.window = Tk()
         self.window.title("SORTING ALGORITHMS")
-        self.window.geometry("300x160")
+        self.window.geometry("300x200")
         p = 10
         self.frame1 = Frame(self.window)
         self.frame1.pack()
@@ -22,10 +22,16 @@ class gui:
             self.frame1, text="Insetion Sort", variable=self.sortingAlgorithm, value=3)
         self.mergeSort = Radiobutton(
             self.frame1, text="Merge Sort", variable=self.sortingAlgorithm, value=4)
+        self.quickSort = Radiobutton(
+            self.frame1, text="Quick Sort", variable=self.sortingAlgorithm, value=5)
+        self.heapSort = Radiobutton(
+            self.frame1, text="Heap Sort", variable=self.sortingAlgorithm, value=6)
         self.selectionSort.grid(row=1, column=1, padx=(p,p), pady=(p,p))
         self.bubbleSort.grid(row=1, column=2, padx=(p,p), pady=(p,p))
         self.insertionSort.grid(row=2, column=1, padx=(p,p), pady=(p,p))
         self.mergeSort.grid(row=2, column=2, padx=(p,p), pady=(p,p))
+        self.quickSort.grid(row=3, column=1, padx=(p,p), pady=(p,p))
+        self.heapSort.grid(row=3, column=2, padx=(p,p), pady=(p,p))
         self.numberOfTestCases = IntVar()
         self.progress = Progressbar(self.window, orient=HORIZONTAL,length=250, mode="determinate", takefocus=True, maximum=100, variable = self.numberOfTestCases)
         self.progress.pack()
@@ -117,6 +123,16 @@ class gui:
                     best = mergeSort(sampleSpace)
                     sampleSpace.reverse()
                     worst = mergeSort(sampleSpace)
+                elif algo == 5:
+                    avg = quickSort(sampleSpace,0,len(sampleSpace)-1)
+                    best = quickSort(sampleSpace,0,len(sampleSpace)-1)
+                    sampleSpace.reverse()
+                    worst = quickSort(sampleSpace,0,len(sampleSpace)-1)
+                elif algo == 6:
+                    avg = heapSort(heap(sampleSpace))
+                    best = heapSort(heap(avg.data))
+                    best.data.reverse()
+                    worst = heapSort(heap(best.data))
                 data.append(timeComplexity(avg,best,worst))
                 self.numberOfTestCases.set(self.numberOfTestCases.get() + 1)             
                 self.window.update()

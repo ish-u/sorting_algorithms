@@ -7,9 +7,9 @@ import random
 
 
 class sortedList():
-    def __init__(self,data,comparisions,runningTime):
+    def __init__(self,data,comparisons,runningTime):
         self.data = data
-        self.comparisions = comparisions
+        self.comparisons = comparisons
         self.runningTime = runningTime
 
     def __str__(self):
@@ -61,6 +61,6 @@ def getComparisonCSV(data):
             writer = csv.writer(c)
             writer.writerow(['SIZE','AVERAGE','BEST','WORST'])
             for t in data:
-                writer.writerow([len(t.avg.data),t.avg.comparisions,t.best.comparisions,t.worst.comparisions])
+                writer.writerow([len(t.avg.data),t.avg.comparisons,t.best.comparisons,t.worst.comparisons])
     except RuntimeError:
         print(RuntimeError)
